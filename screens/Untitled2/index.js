@@ -1,6 +1,6 @@
 import { Text } from "react-native";
 import { todojsonplaceholder_get_todos_list } from "./../../store/tODOJsonPlaceholder/todojsonplaceholder_response_get_GETTODOLists.slice.js";
-import { useEffect } from "react";
+import { useEffect, useSelector } from "react";
 import { useDispatch } from "react-redux";
 import React from "react";
 import { StyleSheet, ScrollView, SafeAreaView } from "react-native";
@@ -10,13 +10,14 @@ const Untitled2 = () => {
   useEffect(() => {
     dispatch(todojsonplaceholder_get_todos_list());
   }, []);
+  const todojsonplaceholder_response_get_GETTODOList = useSelector(state => state.todojsonplaceholder_get_todos_list);
   return <SafeAreaView style={styles.safeArea}>
         <ScrollView contentContainerStyle={{
       backgroundColor: '#f0f0f1',
       padding: 10,
       position: 'relative',
       flex: 1
-    }}><Text style={styles.hbhUhyrK}>Lorem ipsum…</Text></ScrollView>
+    }}><Text style={styles.hbhUhyrK}>{todojsonplaceholder_response_get_GETTODOList.title}</Text></ScrollView>
     </SafeAreaView>;
 };
 
