@@ -1,3 +1,4 @@
+import { Text } from "react-native";
 import { todojsonplaceholder_get_todos_list } from "./../../store/tODOJsonPlaceholder/todojsonplaceholder_response_get_GETTODOLists.slice.js";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -15,7 +16,7 @@ const Untitled2 = () => {
       padding: 10,
       position: 'relative',
       flex: 1
-    }}></ScrollView>
+    }}><Text style={styles.hbhUhyrK}>Lorem ipsum…</Text></ScrollView>
     </SafeAreaView>;
 };
 
@@ -38,6 +39,13 @@ const styles = StyleSheet.create({
   UAWrMLtm: {
     backgroundColor: "#000000",
     height: 1
+  },
+  hbhUhyrK: {
+    width: 100,
+    height: 50,
+    lineHeight: 14,
+    fontSize: 14,
+    borderRadius: 0
   }
 });
 export default Untitled2;
