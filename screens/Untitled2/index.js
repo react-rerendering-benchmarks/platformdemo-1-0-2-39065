@@ -3,7 +3,7 @@ import { todojsonplaceholder_get_todos_list } from "./../../store/tODOJsonPlaceh
 import { useEffect, useSelector } from "react";
 import { useDispatch } from "react-redux";
 import React from "react";
-import { StyleSheet, ScrollView, SafeAreaView } from "react-native";
+import { StyleSheet, ScrollView, SafeAreaView, FlatList } from "react-native";
 
 const Untitled2 = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,13 @@ const Untitled2 = () => {
       padding: 10,
       position: 'relative',
       flex: 1
-    }}><Text style={styles.hbhUhyrK}>{todojsonplaceholder_response_get_GETTODOList.title}</Text></ScrollView>
+    }}>
+          <FlatList data={todojsonplaceholder_response_get_GETTODOList} renderItem={({
+        item
+      }) => <View style={styles.JfLolaKz}>
+                <Text>{item.title}</Text>
+              </View>} keyExtractor={item => item.id} extraData={todojsonplaceholder_response_get_GETTODOList} />
+    </ScrollView>
     </SafeAreaView>;
 };
 
@@ -47,6 +53,9 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     fontSize: 14,
     borderRadius: 0
+  },
+  JfLolaKz: {
+    padding: 10
   }
 });
 export default Untitled2;
