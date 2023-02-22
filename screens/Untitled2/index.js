@@ -1,5 +1,3 @@
-import { FlatList } from "react-native";
-import { View } from "react-native";
 import { todojsonplaceholder_get_todos_list } from "./../../store/tODOJsonPlaceholder/todojsonplaceholder_response_get_GETTODOLists.slice.js";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -17,7 +15,7 @@ const Untitled2 = () => {
       padding: 10,
       position: 'relative',
       flex: 1
-    }}><FlatList style={styles.MaRpRiTH} renderItem={() => <View style={styles.WsWTDgkm}></View>} ItemSeparatorComponent={() => <View style={styles.UAWrMLtm} />} data={[1, 2, 3]} keyExtractor={item => item.toString()}></FlatList></ScrollView>
+    }}></ScrollView>
     </SafeAreaView>;
 };
 
