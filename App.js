@@ -1,3 +1,4 @@
+import { memo } from "react";
 import React, { useContext } from "react";
 import { Provider } from "react-redux";
 import "react-native-gesture-handler";
@@ -9,20 +10,17 @@ import { modules, reducers, hooks, initialRoute } from "@modules";
 import { connectors } from "@store";
 const Stack = createStackNavigator();
 import { GlobalOptionsContext, OptionsContext, getOptions } from "@options";
-
 const getNavigation = (modules, screens, initialRoute) => {
-  const Navigation = () => {
+  const Navigation = memo(() => {
     const routes = modules.concat(screens).map(mod => {
       const pakage = mod.package;
       const name = mod.value.title;
       const Navigator = mod.value.navigator;
-
       const Component = props => {
         return <OptionsContext.Provider value={getOptions(pakage)}>
             <Navigator {...props} />
           </OptionsContext.Provider>;
       };
-
       return <Stack.Screen key={name} name={name} component={Component} />;
     });
     const screenOptions = {
@@ -33,11 +31,9 @@ const getNavigation = (modules, screens, initialRoute) => {
           {routes}
         </Stack.Navigator>
       </NavigationContainer>;
-  };
-
+  });
   return Navigation;
 };
-
 const getStore = globalState => {
   const appReducer = createReducer(globalState, _ => {
     return globalState;
@@ -52,8 +48,7 @@ const getStore = globalState => {
     middleware: getDefaultMiddleware => getDefaultMiddleware()
   });
 };
-
-const App = () => {
+const App = memo(() => {
   const global = useContext(GlobalOptionsContext);
   const Navigation = getNavigation(modules, screens, initialRoute);
   const store = getStore(global);
@@ -64,6 +59,5 @@ const App = () => {
   return <Provider store={store}>
       <Navigation />
     </Provider>;
-};
-
+});
 export default App;
