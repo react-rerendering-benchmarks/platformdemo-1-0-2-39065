@@ -1,9 +1,9 @@
+import { memo } from "react";
 import React, { useContext } from "react";
 import { OptionsContext, GlobalOptionsContext } from "@options";
 import { SafeAreaView, ScrollView, View, Text, Pressable } from "react-native";
 import { useNavigation, useNavigationState } from "@react-navigation/native";
-
-function AppMenu() {
+const AppMenu = memo(function AppMenu() {
   const options = useContext(OptionsContext);
   return <SafeAreaView style={options.styles.container}>
       <ScrollView>
@@ -12,18 +12,15 @@ function AppMenu() {
         <GlobalOptions options={options} />
       </ScrollView>
     </SafeAreaView>;
-}
-
+});
 function AppRoutes({
   options
 }) {
   const navigation = useNavigation();
   const routes = useNavigationState(state => state.routeNames.filter(name => name !== options.title));
-
   const pressed = ({
     pressed
   }) => [pressed ? options.styles.buttonPressed : options.styles.buttonNotPressed, options.styles.button];
-
   const links = routes.map(route => {
     return <Pressable onPress={() => navigation.navigate(route)} style={pressed} key={route}>
         <Text style={options.styles.buttonText}>{route}</Text>
@@ -36,7 +33,6 @@ function AppRoutes({
       {links}
     </View>;
 }
-
 function GlobalOptions({
   options
 }) {
@@ -54,7 +50,6 @@ function GlobalOptions({
       {globalInfo}
     </View>;
 }
-
 export default {
   title: "App Menu",
   navigator: AppMenu

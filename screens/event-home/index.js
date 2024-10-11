@@ -1,10 +1,12 @@
+import { useRef } from "react";
+import { useCallback } from "react";
+import { memo } from "react";
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Image, FlatList, Pressable, TextInput } from "react-native";
-
-const EventHome = () => {
+const EventHome = memo(() => {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [events, setEvents] = useState([]);
-  const [search, setSearch] = useState("");
+  const search = useRef("");
   const [selectedTab, setSelectedTab] = useState(0);
   const [user, setUser] = useState({});
   useEffect(() => {
@@ -64,7 +66,7 @@ const EventHome = () => {
       <FlatList style={styles.list} ListHeaderComponent={() => <View>
             <Text style={styles.greetingText}>Good Morning,</Text>
             <Text style={styles.username}>{user.name}</Text>
-            <Input text="Search" value={search} onChange={text => setSearch(text)} containerStyle={styles.inputContainer} />
+            <Input text="Search" ref={search} containerStyle={styles.inputContainer} />
             <View style={styles.listHeader}>
               <Text style={styles.headerHeading}>Upcoming Event</Text>
               <Text style={styles.headerSubText}>View All</Text>
@@ -72,14 +74,13 @@ const EventHome = () => {
             <FlatList data={upcomingEvents} renderItem={({
         item
       }) => <UpcomingEvent event={item} />} keyExtractor={item => item.id.toString()} horizontal={true} showsHorizontalScrollIndicator={false} />
-            <TabView tabTitles={["Event", "Event", "Event", "Event"]} selected={selectedTab} onPress={index => setSelectedTab(index)} style={styles.tabView} />
+            <TabView tabTitles={["Event", "Event", "Event", "Event"]} selected={selectedTab} onPress={useCallback(index => setSelectedTab(index), [setSelectedTab])} style={styles.tabView} />
           </View>} data={events} renderItem={({
       item
     }) => <Event event={item} />} keyExtractor={item => item.id} showsVerticalScrollIndicator={false} />
       <Footer images={[require("./assets/homeIconActive.png"), require("./assets/starIcon.png"), require("./assets/taskIcon.png"), require("./assets/mapIcon.png")]} titles={["Home", "Sponsors", "Tasks", "Map"]} active={0} activeColor="#7C7C7C" />
     </View>;
-};
-
+});
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -123,7 +124,6 @@ const styles = StyleSheet.create({
   }
 });
 export default EventHome;
-
 const Footer = props => {
   const generator = props.hideTitle ? props.images : props.titles;
   const bgColor = {
@@ -144,7 +144,6 @@ const Footer = props => {
         </View>)}
     </View>;
 };
-
 const footerStyles = StyleSheet.create({
   footer: {
     position: "absolute",
@@ -174,8 +173,7 @@ const footerStyles = StyleSheet.create({
     resizeMode: "contain"
   }
 });
-
-const Input = props => {
+const Input = memo(props => {
   return <View style={[inputStyles.inputContainer, props.containerStyle]}>
       {props.text ? <Text style={inputStyles.inputText}>{props.text}</Text> : null}
 
@@ -184,14 +182,13 @@ const Input = props => {
       {props.icon ? <Image source={props.icon} style={props.text ? inputStyles.iconWithText : inputStyles.iconWithoutText} /> : null}
       <View style={styles.children}>{props.children}</View>
     </View>;
-};
-
+});
 const inputStyles = StyleSheet.create({
   inputContainer: {
     flexDirection: "column",
     justifyContent: "center" // flex: 1
-
   },
+
   inputText: {
     fontSize: 14,
     marginLeft: 20,
@@ -228,8 +225,7 @@ const inputStyles = StyleSheet.create({
   },
   children: {}
 });
-
-const TabView = ({
+const TabView = memo(({
   tabTitles,
   selected,
   onPress,
@@ -249,8 +245,7 @@ const TabView = ({
           <Text>{title}</Text>
         </Pressable>)}
     </View>;
-};
-
+});
 const tabViewStyles = StyleSheet.create({
   paletteContainer: {
     width: "80%",
@@ -281,7 +276,6 @@ const tabViewStyles = StyleSheet.create({
     borderRadius: 10
   }
 });
-
 const Event = ({
   event
 }) => {
@@ -299,7 +293,6 @@ const Event = ({
       </Pressable>
     </View>;
 };
-
 const eventStyles = StyleSheet.create({
   container: {
     flexDirection: "row",
@@ -350,7 +343,6 @@ const eventStyles = StyleSheet.create({
     fontWeight: "bold"
   }
 });
-
 const UpcomingEvent = ({
   event
 }) => {
@@ -368,7 +360,6 @@ const UpcomingEvent = ({
       </View>
     </View>;
 };
-
 const upcomingEventStyles = StyleSheet.create({
   container: {
     width: 220,

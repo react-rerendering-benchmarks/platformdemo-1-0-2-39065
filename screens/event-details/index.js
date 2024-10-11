@@ -1,7 +1,7 @@
+import { memo } from "react";
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, ScrollView, Image, Pressable } from "react-native";
-
-const EventDetails = () => {
+const EventDetails = memo(() => {
   const [event, setEvent] = useState({});
   useEffect(() => {
     setEvent({
@@ -61,8 +61,7 @@ const EventDetails = () => {
         </View>
       </ScrollView>
     </View>;
-};
-
+});
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -173,7 +172,6 @@ const styles = StyleSheet.create({
   }
 });
 export default EventDetails;
-
 const Button = params => {
   const backgroundColor = params.color ? params.color : "#000";
   const textColor = params.textColor ? params.textColor : "#fff";
@@ -196,7 +194,6 @@ const Button = params => {
       </View>
     </View>;
 };
-
 const buttonStyles = StyleSheet.create({
   btnContainer: {
     paddingHorizontal: 40,
